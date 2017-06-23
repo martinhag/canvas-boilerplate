@@ -103,8 +103,6 @@ function getDistance(x1, y1, x2, y2) {
 "use strict";
 
 
-__webpack_require__(3);
-
 var _canvasUtil = __webpack_require__(1);
 
 var util = _interopRequireWildcard(_canvasUtil);
@@ -123,6 +121,8 @@ var mouse = {
   x: innerWidth / 2,
   y: innerHeight / 2
 };
+
+var colors = ['black', 'red', 'blue', 'grey'];
 
 // Event Listeners
 addEventListener("mousemove", function (event) {
@@ -227,15 +227,6 @@ function animate() {
 
 init();
 animate();
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var colors = ['black', 'red', 'blue', 'grey'];
 
 /***/ })
 /******/ ]);

@@ -1,4 +1,3 @@
-import './util/variables';
 import * as util from './util/canvas-util';
 
 // Initial Setup
@@ -14,6 +13,13 @@ let mouse = {
   x: innerWidth / 2,
   y: innerHeight / 2
 };
+
+const colors = [
+  'black',
+  'red',
+  'blue',
+  'grey'
+];
 
 // Event Listeners
 addEventListener("mousemove", function (event) {
