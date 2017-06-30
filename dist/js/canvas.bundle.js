@@ -67,7 +67,59 @@
 /******/ })
 /************************************************************************/
 /******/ ([
-/* 0 */,
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _config = __webpack_require__(3);
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = Ball;
+// Ball
+
+function Ball(x, y, dx, dy, radius, mass, color) {
+  this.x = x;
+  this.y = y;
+  this.dx = dx;
+  this.dy = dy;
+  this.radius = radius;
+  this.mass = mass;
+  this.color = color;
+
+  this.update = function () {
+    if (this.x + this.dx + this.radius > _config2.default.canvas.width || this.x + this.dx - this.radius < 0) {
+      this.dx = -this.dx;
+    }
+
+    if (this.y + this.dy + this.radius > _config2.default.canvas.height || this.y + this.dy - this.radius < 0) {
+      this.dy = -this.dy;
+    }
+
+    this.x += this.dx;
+    this.y += this.dy;
+
+    this.draw();
+  };
+
+  this.draw = function () {
+    _config2.default.c.beginPath();
+    _config2.default.c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+    _config2.default.c.fillStyle = this.color;
+    _config2.default.c.fill();
+    _config2.default.c.closePath();
+  };
+}
+
+/***/ }),
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -107,22 +159,30 @@ var _canvasUtil = __webpack_require__(1);
 
 var util = _interopRequireWildcard(_canvasUtil);
 
+var _config = __webpack_require__(3);
+
+var _config2 = _interopRequireDefault(_config);
+
+var _ball = __webpack_require__(0);
+
+var _ball2 = _interopRequireDefault(_ball);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 // Initial Setup
-var canvas = document.querySelector('canvas');
-var c = canvas.getContext('2d');
+_config2.default.canvas = document.querySelector('canvas');
+_config2.default.c = _config2.default.canvas.getContext('2d');
 
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+_config2.default.canvas.width = innerWidth;
+_config2.default.canvas.height = innerHeight;
 
 // Variables
 var mouse = {
   x: innerWidth / 2,
   y: innerHeight / 2
 };
-
-var colors = ['black', 'red', 'blue', 'grey'];
 
 // Event Listeners
 addEventListener("mousemove", function (event) {
@@ -131,45 +191,11 @@ addEventListener("mousemove", function (event) {
 });
 
 addEventListener("resize", function () {
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
+  _config2.default.canvas.width = innerWidth;
+  _config2.default.canvas.height = innerHeight;
 
   init();
 });
-
-// Ball
-function Ball(x, y, dx, dy, radius, mass, color) {
-  this.x = x;
-  this.y = y;
-  this.dx = dx;
-  this.dy = dy;
-  this.radius = radius;
-  this.mass = mass;
-  this.color = color;
-
-  this.update = function () {
-    if (this.x + this.dx + this.radius > canvas.width || this.x + this.dx - this.radius < 0) {
-      this.dx = -this.dx;
-    }
-
-    if (this.y + this.dy + this.radius > canvas.height || this.y + this.dy - this.radius < 0) {
-      this.dy = -this.dy;
-    }
-
-    this.x += this.dx;
-    this.y += this.dy;
-
-    this.draw();
-  };
-
-  this.draw = function () {
-    c.beginPath();
-    c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-    c.fillStyle = this.color;
-    c.fill();
-    c.closePath();
-  };
-}
 
 // Implementation
 var balls = [];
@@ -179,14 +205,14 @@ function init() {
 
   for (var i = 0; i < 10; i++) {
     var radius = util.randomIntFromRange(15, 20);
-    var x = util.randomIntFromRange(radius, canvas.width - radius);
-    var y = util.randomIntFromRange(radius, canvas.height - radius);
+    var x = util.randomIntFromRange(radius, _config2.default.canvas.width - radius);
+    var y = util.randomIntFromRange(radius, _config2.default.canvas.height - radius);
     var dx = util.randomIntFromRange(-10, 10);
     var dy = util.randomIntFromRange(-10, 10);
     var mass = radius;
-    var color = util.randomColor(colors);
+    var color = util.randomColor(_config2.default.colors);
 
-    balls.push(new Ball(x, y, dx, dy, radius, mass, color));
+    balls.push(new _ball2.default(x, y, dx, dy, radius, mass, color));
   }
 }
 
@@ -220,13 +246,32 @@ function update() {
 // Animation Loop
 function animate() {
   requestAnimationFrame(animate);
-  c.clearRect(0, 0, canvas.width, canvas.height);
+  _config2.default.c.clearRect(0, 0, _config2.default.canvas.width, _config2.default.canvas.height);
 
   update();
 }
 
 init();
 animate();
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  // Initial Setup
+  canvas: null,
+  c: null,
+
+  //Game variables
+  colors: ['black', 'red', 'blue', 'grey']
+};
 
 /***/ })
 /******/ ]);
