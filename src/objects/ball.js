@@ -1,6 +1,8 @@
+import config from '../util/config';
+
+export default Ball;
 // Ball
-function Ball(context, x, y, dx, dy, radius, mass, color) {
-  this.c = context;
+function Ball(x, y, dx, dy, radius, mass, color) {
   this.x = x;
   this.y = y;
   this.dx = dx;
@@ -10,11 +12,11 @@ function Ball(context, x, y, dx, dy, radius, mass, color) {
   this.color = color;
 
   this.update = function () {
-    if ((this.x + this.dx + this.radius) > canvas.width || (this.x + this.dx - this.radius) < 0) {
+    if ((this.x + this.dx + this.radius) > config.canvas.width || (this.x + this.dx - this.radius) < 0) {
       this.dx = -this.dx;
     }
 
-    if ((this.y + this.dy + this.radius) > canvas.height || (this.y + this.dy - this.radius) < 0) {
+    if ((this.y + this.dy + this.radius) > config.canvas.height || (this.y + this.dy - this.radius) < 0) {
       this.dy = -this.dy;
     }
 
@@ -25,10 +27,10 @@ function Ball(context, x, y, dx, dy, radius, mass, color) {
   };
 
   this.draw = function () {
-    this.c.beginPath();
-    this.c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-    this.c.fillStyle = this.color;
-    this.c.fill();
-    this.c.closePath();
+    config.c.beginPath();
+    config.c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+    config.c.fillStyle = this.color;
+    config.c.fill();
+    config.c.closePath();
   };
 }
